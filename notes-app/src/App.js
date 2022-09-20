@@ -37,6 +37,12 @@ function App() {
     );
   }
 
+  function deleteNote(event, noteId) {
+    event.stopPropagation();
+    const newArray = notes.filter((note) => note.id !== noteId);
+    setNotes(newArray);
+  }
+
   const findCurrentNote = () => {
     return (
       notes.find((note) => {
@@ -54,6 +60,7 @@ function App() {
             findCurrentNote={findCurrentNote()}
             setCurrentNoteId={setCurrentNoteId}
             createNewNote={createNewNote}
+            deleteNote={deleteNote}
           />
           {currentNoteId && notes.length > 0 && (
             <Editor

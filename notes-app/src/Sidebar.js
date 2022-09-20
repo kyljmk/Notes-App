@@ -1,4 +1,10 @@
-function Sidebar({ notes, findCurrentNote, setCurrentNoteId, createNewNote }) {
+function Sidebar({
+  notes,
+  findCurrentNote,
+  setCurrentNoteId,
+  createNewNote,
+  deleteNote,
+}) {
   const orderedNotes = notes.sort((a, b) => {
     let da = new Date(a.time),
       db = new Date(b.time);
@@ -13,6 +19,12 @@ function Sidebar({ notes, findCurrentNote, setCurrentNoteId, createNewNote }) {
         onClick={() => setCurrentNoteId(note.id)}
       >
         <h4 className="text-snippet">{note.body.split("\n")[0]}</h4>
+        <button
+          className="delete-btn"
+          onClick={(event) => deleteNote(event, note.id)}
+        >
+          <i className="gg-trash trash-icon"></i>
+        </button>
       </div>
     </div>
   ));
