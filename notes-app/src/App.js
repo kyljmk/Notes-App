@@ -20,14 +20,40 @@ function App() {
     setCurrentNoteId(newNote.id);
   };
 
-  console.log(notes);
+  function updateNote(text) {
+    setNotes((oldNotes) =>
+      oldNotes.map((oldNote) => {
+        return oldNote.id === currentNoteId
+          ? { ...oldNote, body: text }
+          : oldNote;
+      })
+    );
+  }
+
+  const findCurrentNote = () => {
+    return (
+      notes.find((note) => {
+        return note.id === currentNoteId;
+      }) || notes[0]
+    );
+  };
 
   return (
     <main>
       {notes.length > 0 ? (
         <Split sizes={[30, 70]} direction="horizontal" className="split">
-          <Sidebar />
-          {currentNoteId && notes.length > 0 && <Editor />}
+          <Sidebar
+            notes={notes}
+            findCurrentNote={findCurrentNote()}
+            setCurrentNoteId={setCurrentNoteId}
+            createNewNote={createNewNote}
+          />
+          {currentNoteId && notes.length > 0 && (
+            <Editor
+              findCurrentNote={findCurrentNote()}
+              updateNote={updateNote}
+            />
+          )}
         </Split>
       ) : (
         <div className="no-notes">
