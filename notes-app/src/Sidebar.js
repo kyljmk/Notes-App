@@ -1,5 +1,10 @@
 function Sidebar({ notes, findCurrentNote, setCurrentNoteId, createNewNote }) {
-  const noteElements = notes.map((note, index) => (
+  const orderedNotes = notes.sort((a, b) => {
+    let da = new Date(a.time),
+      db = new Date(b.time);
+    return db - da;
+  });
+  const noteElements = orderedNotes.map((note, index) => (
     <div key={note.id}>
       <div
         className={`title ${
@@ -7,7 +12,7 @@ function Sidebar({ notes, findCurrentNote, setCurrentNoteId, createNewNote }) {
         }`}
         onClick={() => setCurrentNoteId(note.id)}
       >
-        <h4 className="text-snippet">Note {index + 1}</h4>
+        <h4 className="text-snippet">{note.body.split("\n")[0]}</h4>
       </div>
     </div>
   ));
